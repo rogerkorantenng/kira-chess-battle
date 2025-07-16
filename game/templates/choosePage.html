@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Select Mode</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/selector.css' %}"/>
+    <link rel="icon" type="image/png" href="{% static 'chess.png' %}"/>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Poppins:wght@400;600&display=swap"
+          rel="stylesheet"> <!-- Retro font and Modern font -->
+
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 90%;
+            font-family: 'Poppins', sans-serif;
+            background: url("{% static 'images/background.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            {#transform: scale(0.90);#}
+
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+            border-bottom: 2px solid #FF5733;
+        }
+
+
+        footer {
+            text-align: center;
+            padding: 39px;
+            background-color: #222222;
+            z-index: 9999;
+            border-bottom: 2px solid #FF5733;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            color: #FF5733;
+            font-family: 'Press Start 2P', cursive;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
+
+        footer p {
+            font-size: 1rem;
+            color: #ddd;
+        }
+
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(100% - 120px); /* Account for header and footer */
+            flex-direction: column;
+            text-align: center;
+            color: white;
+        }
+
+        .game-mode {
+            margin-top: 40px;
+        }
+
+        .btn {
+            font-size: 1.4rem;
+            padding: 15px 40px;
+            background-color: #FF5733;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin: 10px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #FF7043;
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 87, 51, 0.7);
+        }
+
+        .dropdown-select:hover {
+            background-color: #FF7043;
+            cursor: pointer;
+            color: red;
+        }
+
+        #natoVideo, #russiaVideo {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: auto;
+            z-index: 1000;
+            background: black;
+            display: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 999;
+        }
+
+        .loading-line {
+            width: 0;
+            height: 100%;
+            background-color: #3498db;
+            transition: width 0.1s;
+        }
+
+        .player-selection h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: red;
+        }
+
+        .dropdown-label {
+            font-size: 1.2rem;
+            color: red;
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        /* Dropdown Container */
+        .dropdown-container {
+            position: relative;
+            width: 250px;
+        }
+
+        /* Style for the dropdown */
+        .dropdown-select {
+            width: 100%;
+            padding: 12px 30px 12px 12px;
+            font-size: 1.2rem;
+            background-color: rgba(255, 87, 51, 0.8);
+            color: black;
+            border-radius: 8px;
+            border: 2px solid #FF5733;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        /* Custom dropdown arrow */
+        .dropdown-select::after {
+            content: ' ▼';
+            font-size: 12px;
+            color: #3498db;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* Dropdown hover effect */
+        .dropdown-select:hover {
+            background-color: #FF7043;
+            color: white;
+            border-color: #FF5733;
+        }
+
+        /* Focus effect */
+        .dropdown-select:focus {
+            outline: none;
+            border-color: #FF5733;
+            box-shadow: 0 0 5px rgba(255, 87, 51, 0.7);
+        }
+
+        /* Dropdown options */
+        .dropdown-option {
+            padding: 12px;
+            background-color: #f8f8f8;
+            border-bottom: 1px solid #ccc;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #222222;
+        }
+
+        /* Hover effect on options */
+        .dropdown-option:hover {
+            background-color: #FF5733;
+            color: white;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Media queries for responsiveness */
+        @media screen and (max-width: 768px) {
+            .dropdown-select {
+                width: 100%; /* Full width on smaller screens */
+            }
+        }
+
+        /* Option container styling */
+        .dropdown-list {
+            display: none;
+            position: absolute;
+            width: 100%;
+            top: 100%;
+            left: 0;
+            background-color: red;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+
+        .dropdown-container.open .dropdown-list {
+            display: block;
+        }
+
+
+    </style>
+</head>
+
+<body>
+<header>
+    <h1>World Chess Battle III</h1>
+</header>
+
+
+<main>
+    <section class="game-mode">
+        <form action="/board" method="post" id="warGameForm" class="game-form">
+            {% csrf_token %}
+            <button id="startGameButton" class="btn start-game-btn" type="button">
+                Start the Battle!
+            </button>
+            <div class="dropdown-group">
+                <label for="dropdown" class="dropdown-label">Choose your side:</label>
+                <div class="custom-dropdown">
+                    <select name="mySelect" id="dropdown" class="dropdown-select">
+                        <option value="" class="dropdown-option"> Please Select</option>
+                        <option value="white" class="dropdown-option" data-icon="nato">Team NATO</option>
+                        <option value="black" class="dropdown-option" data-icon="russia">Team Russia</option>
+                    </select>
+                </div>
+            </div>
+
+        </form>
+    </section>
+</main>
+
+<!-- Video Elements -->
+<video id="natoVideo">
+    <source src="{% static 'videos/nato_intro.mp4' %}" type="video/mp4"/>
+    Your browser does not support the video tag.
+</video>
+
+<video id="russiaVideo">
+    <source src="{% static 'videos/russia_intro.mp4' %}" type="video/mp4"/>
+    Your browser does not support the video tag.
+</video>
+
+<!-- Loading Line -->
+<div id="loadingOverlay" class="loading-overlay">
+    <div id="loadingLine" class="loading-line"></div>
+</div>
+
+<footer>
+    <p>&copy; 2025 World Chess Battle III. All rights reserved. Built for Azure AI Developer Hackathon</p>
+</footer>
+
+<script>
+    document.getElementById("startGameButton").addEventListener("click", function () {
+        const selectedSide = document.getElementById("dropdown").value;
+        const natoVideo = document.getElementById("natoVideo");
+        const russiaVideo = document.getElementById("russiaVideo");
+        const form = document.getElementById("warGameForm");
+        const loadingOverlay = document.getElementById("loadingOverlay");
+        const loadingLine = document.getElementById("loadingLine");
+
+        let videoToPlay;
+
+        // Show loading line
+        loadingOverlay.style.display = "block";
+
+        // Trigger the loading line animation
+        loadingLine.style.width = "0%"; // Reset the loading line
+        setTimeout(() => {
+            loadingLine.style.transition = "none"; // Remove transition to immediately show progress
+            loadingLine.style.width = "0%"; // Reset for smoother transition
+            setTimeout(() => {
+                loadingLine.style.transition = "width 0.1s"; // Reapply smooth transition for gradual updates
+            }, 100);
+        }, 100);
+
+        // Determine which video to play based on the selection
+        if (selectedSide === "white") {
+            videoToPlay = natoVideo;
+        } else if (selectedSide === "black") {
+            videoToPlay = russiaVideo;
+        }
+
+        if (videoToPlay) {
+            // Show the video and play it
+            videoToPlay.style.display = "block";
+            videoToPlay.play();
+
+            // Update loading line width as the video plays
+            videoToPlay.ontimeupdate = function () {
+                const progress = (videoToPlay.currentTime / videoToPlay.duration) * 100;
+                loadingLine.style.width = progress + "%"; // Update the loading line width based on video progress
+            };
+
+            // After the video ends, complete the loading line and submit the form
+            videoToPlay.onended = function () {
+                loadingLine.style.width = "100%"; // Ensure the line is fully completed
+                setTimeout(() => {
+                    loadingOverlay.style.display = "none"; // Hide the loading line
+                    form.submit(); // Submit the form after video ends
+                }, 500); // Wait a moment before submitting
+            };
+        }
+    });
+</script>
+</body>
+</html>

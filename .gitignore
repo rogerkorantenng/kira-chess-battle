@@ -1,0 +1,14 @@
+chessGame/__pycache__
+game/__pycache__
+game/migrations
+docker-compose.yml
+Dockerfile
+data.csv
+db.sqlite3
+.idea
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+.ebextensions

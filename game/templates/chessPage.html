@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="{% static 'js/jq.js' %}"></script>
+    <title>Chess</title>
+    <link
+            rel="shortcut icon"
+            type="image/png"
+            href="{% static 'chess.png' %}"
+    />
+    <style>
+        /* Inline styles for specific elements */
+        .turn-flag {
+            width: 40px;
+            height: auto;
+            margin-left: 5px;
+        }
+
+
+    </style>
+</head>
+
+<body>
+
+<!-- Main Game Container -->
+<div class="container">
+    <h1 class="turns" id="turns">Nato Starts</h1>
+</div>
+
+<div class="difContainer">
+    <!-- Top Status Bar -->
+    <div class="top-status-bar status-bar">
+        <div id="darkStatus" class="captured-pieces">
+            <h2>Captured Soldiers:</h2>
+        </div>
+    </div>
+
+    <!-- Chessboard Container -->
+    <div class="container" id="boardContainer">
+        <div class="chessboard" id="board">
+            <!-- Chessboard squares and pieces will be dynamically rendered by JS -->
+        </div>
+    </div>
+    <audio id="backgroundMusic" src="{% static 'music/war.mp3' %}" loop></audio>
+
+    <!-- Bottom Status Bar -->
+    <div class="bottom-status-bar status-bar">
+        <div id="lightStatus" class="captured-pieces">
+            <h2>Captured Soldiers:</h2>
+        </div>
+    </div>
+
+    <button class="resetButton">
+        <a href="{% url 'resetBoard' %}">Reset The Board</a>
+    </button>
+    <button id="soundToggle" class="sound-button">🔊 Sound</button>
+
+    <!-- Teams Information -->
+    <div class="team-listA" id="teamA">
+        <h3>Team Nato</h3>
+        <ul>
+            <li>
+                <img src="https://flagcdn.com/w320/us.png" alt="USA Flag" class="flag-icon">
+                <span>United States</span>
+                <img src="{% static 'presidents/trump.jpg' %}" alt="President Joe Biden" class="president-photo">
+            </li>
+            <li>
+                <img src="https://flagcdn.com/w320/gb.png" alt="UK Flag" class="flag-icon">
+                <span>United Kingdom</span>
+                <img src="{% static 'presidents/uk.jpeg' %}" alt="Prime Minister Rishi Sunak" class="president-photo">
+            </li>
+            <li>
+                <img src="https://flagcdn.com/w320/fr.png" alt="France Flag" class="flag-icon">
+                <span>France</span>
+                <img src="{% static 'presidents/france.jpeg' %}" alt="President Emmanuel Macron"
+                     class="president-photo">
+            </li>
+            <li>
+                <img src="https://flagcdn.com/w320/il.png" alt="Isreal Flag" class="flag-icon">
+                <span>Isreal</span>
+                <img src="{% static 'presidents/isreal.JPG' %}" alt="Isaac Herzog" class="president-photo">
+            </li>
+
+            <li>
+                <img src="https://flagcdn.com/w320/it.png" alt="Italy Flag" class="flag-icon">
+                <span>Italy</span>
+                <img src="{% static 'presidents/italy.webp' %}" alt="Prime Minister Giorgia Meloni"
+                     class="president-photo">
+            </li>
+            <li>
+                <img src="https://flagpedia.net/data/flags/w580/ua.webp" alt="Ukraine Flag" class="flag-icon">
+                <span>Ukraine</span>
+                <img src="{% static 'presidents/ukraine.jpg' %}" alt="Volodymyr Zelenskyy"
+                     class="president-photo">
+            </li>
+
+
+        </ul>
+    </div>
+
+    <div class="team-listB" id="teamB">
+        <h3>Team Russia</h3>
+        <ul>
+            <li>
+                <img src="https://flagcdn.com/w320/ru.png" alt="Russia Flag" class="flag-icon">
+                <span>Russia</span>
+                <img src="{% static 'presidents/russia.png' %}" alt="President Putin" class="president-photo">
+            </li>
+            <li>
+                <img src="https://flagcdn.com/w320/cn.png" alt="China Flag" class="flag-icon">
+                <span>China</span>
+                <img src="{% static 'presidents/china.jpeg' %}" alt="President Xi Jinping" class="president-photo">
+            </li>
+            <li>
+                <img src="https://flagcdn.com/w320/kp.png" alt="North Korea Flag" class="flag-icon">
+                <span>North Korea</span>
+                <img src="{% static 'presidents/korea.jpg' %}" alt="Supreme Leader Kim Jong-un" class="president-photo">
+            </li>
+            <li>
+                <img src="https://flagcdn.com/w320/ir.png" alt="Iran Flag" class="flag-icon">
+                <span>Iran</span>
+                <img src="{% static 'presidents/iran.webp' %}" alt="Supreme Leader Ali Khamenei"
+                     class="president-photo">
+            </li>
+            <li>
+                <img src="https://flagcdn.com/w320/bf.png" alt="Burkina Flag" class="flag-icon">
+                <span>Burkina Faso</span>
+                <img src="{% static 'presidents/burkina.jpeg' %}" alt="Capt. Ibrahim Traoré" class="president-photo">
+            </li>
+            <li>
+                <img src="https://flagcdn.com/w320/by.png" alt="Pakistan Flag" class="flag-icon">
+                <span>Belarus</span>
+                <img src="{% static 'presidents/belarus.webp' %}" alt="Asif Ali Zardari"
+                     class="president-photo">
+            </li>
+
+        </ul>
+    </div>
+
+</div>
+
+{% csrf_token %}
+
+<!-- Hidden AI Color -->
+<h1 hidden id='aiCol'>{{ aiCol }}</h1>
+
+<!-- Popup for Endgame -->
+<div class="popup" id="popup-1">
+    <div class="overlay"></div>
+    <div class="content">
+        <div class="close-btn" onclick="togglePopup()">&times;</div>
+        <h1 id="winner">Game Over</h1>
+        <a>
+            <button class="new-game-btn">
+                <a href="{% url 'resetBoard' %}">New Game!</a>
+            </button>
+        </a>
+    </div>
+</div>
+
+<script src="{% static 'js/app.js' %}"></script>
+
+<!-- JavaScript to hide preloader after 5 seconds -->
+<script>
+    window.addEventListener('load', function () {
+        setTimeout(function () {
+            document.body.classList.add('loaded');
+        }, 5); // 5000 milliseconds = 5 seconds
+    });
+
+    const music = document.getElementById('backgroundMusic');
+    const soundToggle = document.getElementById('soundToggle');
+
+    // Ensure the audio starts playing with sound
+    window.addEventListener('click', () => {
+        music.volume = 0.4; // Set initial volume
+        music.play(); // Autoplay music
+    });
+
+    // Add event listener for the toggle button
+    soundToggle.addEventListener('click', () => {
+        if (music.muted) {
+            music.muted = false; // Unmute music
+            soundToggle.textContent = "🔊 Sound"; // Update button text
+        } else {
+            music.muted = true; // Mute music
+            soundToggle.textContent = "🔇 Muted"; // Update button text
+        }
+    });
+
+    // Inactivity Timer Setup
+    let inactivityTimeout;
+
+    // Reset timer function
+    function resetInactivityTimer() {
+        clearTimeout(inactivityTimeout);
+        inactivityTimeout = setTimeout(() => {
+            // Automatically redirect to reset the game after 1 hour of inactivity
+            window.location.href = "{% url 'resetBoard' %}";
+        }, 300000);  // 1 hour = 3600000 milliseconds
+    }
+
+    // Track user activity
+    window.addEventListener('mousemove', resetInactivityTimer);
+    window.addEventListener('keypress', resetInactivityTimer);
+    window.addEventListener('click', resetInactivityTimer);
+
+    // Initialize the timer when the page loads
+    window.addEventListener('load', function () {
+        resetInactivityTimer();
+    });
+</script>
+
+</body>
+</html>

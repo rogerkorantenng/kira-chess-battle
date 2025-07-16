@@ -1,0 +1,100 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+}
+
+header {
+    text-align: center;
+    padding: 1rem;
+    background-color: #282c34;
+    color: #fff;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2rem auto;
+    max-width: 800px;
+    transform: scale(0.80);
+
+}
+
+.game-mode {
+    margin: 1rem 0;
+}
+
+.btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #0078d7;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #005ea6;
+}
+
+
+.dropdown-label {
+    margin-right: 0.5rem;
+    font-weight: bold;
+    font-size: 1.2rem; /* Slightly larger for better readability */
+    color: red; /* Adjust for contrast */
+}
+
+.dropdown-select {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #fff; /* Dropdown background */
+    color: red; /* Text color */
+    cursor: pointer;
+    transition: all 0.3s ease-in-out; /* Smooth interaction */
+}
+
+.dropdown-select:hover,
+.dropdown-select:focus {
+    border-color: #007bff; /* Highlight on hover/focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Subtle glow */
+    outline: none; /* Remove default outline */
+}
+
+@media (max-width: 768px) {
+    .dropdown-group {
+        flex-direction: column; /* Stack label and dropdown */
+        align-items: flex-start;
+    }
+
+
+}
+
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #282c34;
+    color: #fff;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+/* File: static/css/selector.css */
+#warVideo {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: 50%;
+    z-index: 1000;
+    background: black;
+}
+

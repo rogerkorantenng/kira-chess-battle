@@ -1,0 +1,315 @@
+body, html {
+    background-color: #333;
+    overflow: visible;
+}
+
+button {
+    display: inline-block;
+    background: rgb(159, 189, 183);
+    font-size: 1.125rem;
+    padding: 1em 2em;
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+    border-radius: 12px;
+}
+
+a {
+    color: #222;
+    text-decoration: none;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: -0px;
+}
+
+
+.chessboard {
+    width: 640px;
+    height: 640px;
+    margin: 20px;
+    border: 15px solid #333;
+    align-items: center;
+}
+
+.square {
+    width: 80px;
+    height: 80px;
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    float: left;
+    font-size: 0px;
+}
+
+.light {
+    background: rgb(165, 164, 164);
+}
+
+.dark {
+    background: rgb(146, 112, 66);
+}
+
+.selected {
+    background-color: red;
+}
+
+.recentlyMoved {
+    background-color: blueviolet;
+}
+
+.uiNum {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    font-size: 16px;
+}
+
+.uiLet {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    font-size: 16px;
+}
+
+
+.highlightAvailable {
+    background-color: rgb(137, 43, 226);
+    opacity: 0.5;
+}
+
+.pieceLetter {
+    font-size: 0px;
+}
+
+.resetButton {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    background-color: red;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 10000;
+
+}
+
+
+.difContainer {
+    position: relative;
+    transform: translateY(-120px) scale(0.80);
+    width: 90vw;
+    height: auto;
+    margin: 30px auto;
+
+
+}
+
+.top-status-bar {
+    position: relative;
+    top: 0px;
+}
+
+.bottom-status-bar {
+    position: relative;
+    bottom: 0px;
+}
+
+.status-bar {
+    right: 30%;
+    left: 30%;
+    background-color: #333;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+}
+
+.captured-pieces h2 {
+    margin-right: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: aliceblue;
+
+}
+
+
+.captured-pieces {
+    display: flex;
+    align-items: center;
+}
+
+.captured-piece {
+    width: 50px;
+    height: 50px;
+    margin: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #fff;
+}
+
+.captured-piece img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.turns {
+    color: white;
+    transform: translateY(-0px)
+
+}
+
+.popup .overlay {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    display: none;
+}
+
+.popup .content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: #fff;
+    width: 500px;
+    height: 250px;
+    z-index: 2;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+    font-family: "Open Sans", sans-serif;
+}
+
+.popup .close-btn {
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 30px;
+    height: 30px;
+    background: #222;
+    color: #fff;
+    font-size: 25px;
+    font-weight: 600;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 50%;
+}
+
+.popup.active .overlay {
+    display: block;
+}
+
+.popup.active .content {
+    transition: all 300ms ease-in-out;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.sound-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: red;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 10000;
+}
+
+.sound-button:hover {
+    background-color: #ddd;
+}
+
+.team-listA {
+    position: fixed;
+    top: 30%;
+    left: -15%;
+    transform: translateY(-50%);
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10000;
+    width: 300px;
+}
+.team-listA h3, .team-listB h3 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.team-listA ul, .team-listB ul {
+    list-style: none;
+    padding: 0;
+}
+
+.team-listA li, .team-listB li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.flag-icon {
+    width: 60px;
+    height: 60px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.president-photo {
+    width: 70px;
+    height: 70px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-left: auto;
+}
+
+.leader {
+    background-color: #ffeb3b; /* Bright yellow background */
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.leader-label {
+    font-size: 0.9rem;
+    color: #ff6347; /* Red color for the "Leader" label */
+    margin-left: 10px;
+}
+
+.team-listB {
+    position: fixed;
+    top: 30%;
+    right: -15%;
+    transform: translateY(-50%);
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10000;
+    width: 300px;
+}
+
