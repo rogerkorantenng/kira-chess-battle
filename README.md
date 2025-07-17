@@ -1,18 +1,18 @@
-# 🌍 World Chess Battle III: The Ultimate Geopolitical Chess Game
+# 🌍 Kiro Chess Battle III: The Ultimate Geopolitical Game
 
 ## 🎯 Inspiration
 
 Throughout history, war has shaped nations, disrupted lives, and left scars on the world. From the trenches of World War I to the global tensions of the Cold War, conflicts have always been driven by the clash of ideologies and power struggles. Yet, war's most enduring legacy is the devastation it leaves in its wake—lost lives, divided families, and shattered communities.
 
-In a world where geopolitical tensions still simmer, **World Chess Battle III** imagines an alternative. Instead of bloodshed, global powers settle their disputes on the chessboard. Here, strategy replaces violence, and diplomacy blends with tactical brilliance. Leaders become chess pieces, and alliances are tested in a game where every move reflects the weight of global politics.
+In a world where geopolitical tensions still simmer, **Kiro Chess Battle III** imagines an alternative. Instead of bloodshed, global powers settle their disputes on the chessboard. Here, strategy replaces violence, and diplomacy blends with tactical brilliance. Leaders become chess pieces, and alliances are tested in a game where every move reflects the weight of global politics.
 
-This is a war without casualties, where the battlefield is the mind, and the victors are those who outwit their opponents. **World Chess Battle III** challenges players to think like global leaders, combining the art of negotiation with the strategy of chess to achieve victory.
+This is a war without casualties, where the battlefield is the mind, and the victors are those who outwit their opponents. **Kiro Chess Battle III** challenges players to think like global leaders, combining the art of negotiation with the strategy of chess to achieve victory.
 
 ---
 
 ## 🕹️ What It Does
 
-World Chess Battle III is more than just a game—it's a stage for diplomacy and strategy. Players choose to lead either the **NATO Alliance** or the **Russian Alliance**, each with unique powers inspired by their real-world counterparts.
+Kiro Chess Battle III is more than just a game—it's a stage for diplomacy and strategy. Players choose to lead either the **NATO Alliance** or the **Russian Alliance**, each with unique powers inspired by their real-world counterparts.
 
 ### 🛡️ NATO Alliance
 - **United States**: President Donald Trump *(Ability: Economic Sanctions - temporarily restricts an opponent's moves)*.  
@@ -69,7 +69,7 @@ Follow these steps to set up and run the Chess Game on your local environment:
 
 ```bash
 # 1. Clone the Repository
-git clone https://github.com/rogerkorantenng/chess-game.git
+git clone https://github.com/rogerkorantenng/kira-chess-battle.git
 cd chess-game
 ```
 
@@ -96,4 +96,4 @@ python3 manage.py runserver
 
 
 **Join the Battle. Rewrite History. Dominate the Chessboard.**  
-Play **World Chess Battle III** and prove your strategic prowess today!
+Play **Kiro Chess Battle III** and prove your strategic prowess today!
