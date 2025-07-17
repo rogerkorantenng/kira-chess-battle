@@ -1,0 +1,19 @@
+{
+  "name": "Test Chess Game",
+  "description": "Run tests and validate chess game functionality",
+  "trigger": {
+    "type": "manual"
+  },
+  "actions": [
+    {
+      "type": "command",
+      "command": "python manage.py test game",
+      "description": "Run game app tests"
+    },
+    {
+      "type": "command", 
+      "command": "python manage.py check",
+      "description": "Check for Django issues"
+    }
+  ]
+}

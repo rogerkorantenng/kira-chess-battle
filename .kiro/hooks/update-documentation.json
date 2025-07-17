@@ -1,0 +1,14 @@
+{
+  "name": "Update Documentation",
+  "description": "Update README and project documentation with latest changes",
+  "trigger": {
+    "type": "manual"
+  },
+  "actions": [
+    {
+      "type": "agent",
+      "prompt": "Review the current codebase and update the README.md file to reflect any new features, installation steps, or usage instructions. Also check if any code comments need updating and ensure documentation is accurate and comprehensive.",
+      "description": "Update project documentation"
+    }
+  ]
+}

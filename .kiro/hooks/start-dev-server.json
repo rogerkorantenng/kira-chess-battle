@@ -1,0 +1,19 @@
+{
+  "name": "Start Development Server",
+  "description": "Start Django development server for chess game",
+  "trigger": {
+    "type": "manual"
+  },
+  "actions": [
+    {
+      "type": "command",
+      "command": "python manage.py migrate",
+      "description": "Apply any pending migrations"
+    },
+    {
+      "type": "command",
+      "command": "python manage.py runserver",
+      "description": "Start development server"
+    }
+  ]
+}
